@@ -3,6 +3,7 @@
   "private": "true",
   "dependencies": {
     "autoprefixer": "^10.4.20",
+    "flowbite": "^2.5.2",
     "postcss": "^8.4.47",
     "postcss-cli": "^11.0.0",
     "postcss-import": "^16.1.0",
