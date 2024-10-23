@@ -66,3 +66,5 @@ gem "devise", "~> 4.9"
 gem "simple_form"
 gem "slim-rails"
 
+
+gem "cssbundling-rails", "~> 1.4"
