@@ -11,5 +11,8 @@
   },
   "scripts": {
     "build:css": "postcss ./app/assets/stylesheets/application.postcss.css -o ./app/assets/builds/application.css"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.15"
   }
 }
