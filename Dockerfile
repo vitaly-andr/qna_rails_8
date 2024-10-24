@@ -31,8 +31,7 @@ FROM base AS build
 # Install packages needed to build gems
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential git pkg-config && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives \
-
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
 # Install JavaScript dependencies
 ARG NODE_VERSION=18.13.0
 ARG YARN_VERSION=1.22.22
