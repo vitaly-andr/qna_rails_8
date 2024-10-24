@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.9",
-    "@tailwindcss/typography": "^0.5.15"
+    "@tailwindcss/typography": "^0.5.15",
+    "flowbite-typography": "^1.0.4"
   }
 }
