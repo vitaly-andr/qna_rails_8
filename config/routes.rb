@@ -36,5 +36,7 @@ Rails.application.routes.draw do
   end
   resources :live_feed, only: [ :index ]
   root "questions#index"
+  get 'search', to: 'search#index'
+
 
 end

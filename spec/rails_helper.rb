@@ -86,7 +86,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include ControllerHelpers, type: :controller
   # config.include FeatureHelpers, type: :feature
-  # config.include FeatureHelpers, type: :system
+  config.include FeatureHelpers, type: :system
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Warden::Test::Helpers
   config.include ActionView::RecordIdentifier, type: :feature
