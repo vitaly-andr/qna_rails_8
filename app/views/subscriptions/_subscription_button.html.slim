@@ -1,0 +1,9 @@
+= turbo_frame_tag dom_id(subscribable, :subscription) do
+  - if subscribable.subscribed?(current_user)
+    = link_to polymorphic_path([subscribable, :subscriptions]), data: { turbo_method: :delete }, remote: true, class: "button is-warning is-light" do
+      span.icon.is-medium
+        = image_tag "bell-slash.svg"
+  - else
+    = link_to polymorphic_path([subscribable, :subscriptions]), data: { turbo_method: :post }, remote: true, class: "button is-primary is-light" do
+      span.icon.is-medium
+        = image_tag "bell.svg"

@@ -1,0 +1,7 @@
+ul#answers
+  - if @best_answer
+    = render 'answers/best_answer', answer: @best_answer
+  - if @answers.present?
+    = render partial: 'answers/answer', collection: @answers, as: :answer
+  - else
+    p No answers available.

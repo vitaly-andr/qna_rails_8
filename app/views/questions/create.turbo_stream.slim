@@ -1,0 +1,4 @@
+/# locals: (questions:)
+= turbo_stream.replace 'main' do
+  = render template: 'questions/index', locals: { questions: questions }
+= render_flash_notice('Question was successfully created.')

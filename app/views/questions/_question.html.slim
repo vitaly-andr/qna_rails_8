@@ -1,0 +1,64 @@
+= turbo_frame_tag dom_id(question) do
+  li.question
+    header.card-header
+      .card-header-title = link_to question.title, question_path(question), data: { turbo: false }
+      p.subtitle Asked by: #{question.author.email}
+    .card-content
+      .media
+        .media-left
+          figure.image.is-48x48
+            - if question.reward
+              = image_tag question.reward.image.variant(resize_to_limit: [ 150, 150 ])
+        .media-content
+          p.content.mb-4 = truncate(question.body, length: 100)
+          - if user_signed_in? && !current_user.author_of?(question)
+            .nav.level.is-mobile.vote-area id=dom_id(question) data-controller="vote" data-vote-votable-id="#{question.id}" data-vote-votable-type="Question"
+              p#error-message.is-hidden  data-vote-target="errorMessage"
+              .level-right
+                p.level-item Rating:
+                span.level-item.vote__rating data-vote-target="rating"= question.rating
+                a.level-item
+                  span.vote__up data-action="click->vote#upvote"
+                    = image_tag 'thumbs-up.svg', class: 'icon is-small icon-success'
+                a.level-item
+                  span.vote__down data-action="click->vote#downvote"
+                    = image_tag 'thumbs-down.svg', class: 'icon is-small'
+                a.level-item
+                  span.vote__cancel data-action="click->vote#cancelVote"
+                    = image_tag 'trash-can.svg', class: 'icon is-small'
+    - if question.links.any? || question.files.attached?
+      .title.has-text-centered Attachments
+      .columns
+        - if question.links.any?
+          .column.is-half
+            .title.has-text-centered Links:
+            .section#question-links
+              ul
+                - question.links.each do |link|
+                  li = render partial: 'shared/link', locals: { link: link }
+        .column.is-half
+          .title.has-text-centered Files:
+          - if question.files.attached?
+            ul.attachments
+              - question.files.each do |file|
+                li id="file_#{file.id}"
+                  = link_to file.filename.to_s, url_for(file)
+                  - if user_signed_in? && current_user.author_of?(question)
+                    = link_to 'X', attachment_path(file),
+                            data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this file?' },
+                            class: 'delete-file-link',
+                            style: 'color: red; margin-left: 10px;'
+
+    = render partial: 'comments/comments', locals: { commentable: question }
+    = render partial: 'subscriptions/subscription_button', locals: { subscribable: question }
+    - if user_signed_in? && current_user.author_of?(question)
+      .card-footer
+        .card-footer-item
+          = link_to 'Edit Question', edit_question_path(question), data: { turbo_frame: dom_id(question) }
+        .card-footer-item
+          = link_to 'Delete Question', question_path(question),
+                  data: { turbo_method: :delete,
+                          turbo_frame: '_top',
+                          turbo_confirm: 'Are you sure?',
+                          turbo_action: 'advance',
+                          }

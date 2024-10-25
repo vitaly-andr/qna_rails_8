@@ -1,0 +1,15 @@
+= form_with model: [question, answer], url: question_answers_path(@question), id: 'answer_form', remote: true, data: { controller: 'links' } do |f|
+
+  - if answer.errors.any?
+    .notification.is-danger.error-message
+      p There were errors with your submission:
+      ul
+        - answer.errors.full_messages.each do |message|
+          li= message
+  = render 'answers/form_fields', f: f, answer: answer
+
+  div
+    = f.submit 'Submit Answer'
+
+  // Reuse the link template partial
+  = render 'shared/link_template', f: f

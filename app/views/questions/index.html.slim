@@ -1,0 +1,15 @@
+/# locals: (questions:)
+= turbo_frame_tag 'main' do
+  = link_to 'Live Feed', live_feed_index_path
+  .p
+    = link_to 'Search', search_path, target: "_top"
+
+  .hero.is-info
+    .title.has-text-centered List of Questions
+  = link_to 'Ask question', new_question_path
+
+  ul
+    - questions.each do |question|
+      = render partial: 'questions/question', locals: { question: question }
+
+
