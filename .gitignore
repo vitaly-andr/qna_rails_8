@@ -40,3 +40,4 @@
 /node_modules
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/dictionaries/vitaly.xml
+/coverage/.last_run.json
