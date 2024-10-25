@@ -49,6 +49,15 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  #gems added according to the previous GemFile in rails 7
+  gem 'rspec-rails'
+  gem "factory_bot_rails"
+  gem 'ffaker'
+  gem "simplecov", require: false
+  gem 'webmock'
+  gem 'letter_opener'
+  gem 'capybara-email'
+
 end
 
 group :development do
@@ -56,10 +65,19 @@ group :development do
   gem "web-console"
 end
 
+
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  #gems added according to the previous GemFile in rails 7
+  gem 'cuprite'
+  gem 'shoulda-matchers'
+  gem 'rails-controller-testing'
+  gem 'launchy'
+  gem 'pundit-matchers'
+  gem 'database_cleaner-active_record'
+
 end
 
 gem "devise", "~> 4.9"
@@ -68,3 +86,26 @@ gem "slim-rails"
 
 
 gem "cssbundling-rails", "~> 1.4"
+
+gem 'aws-sdk-s3', '~> 1.0'
+
+gem 'image_processing'
+gem 'requestjs-rails'
+gem 'jsbundling-rails'
+gem 'omniauth'
+gem 'omniauth-github'
+gem 'omniauth-rails_csrf_protection'
+gem 'rest-client'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-oauth2'
+gem 'omniauth-vkontakte'
+gem 'pundit'
+gem 'active_model_serializers', '~> 0.10.0'
+gem 'doorkeeper'
+gem 'oj'
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'whenever', require: false
+gem 'elasticsearch', '~> 8.0'
+gem 'searchkick'
+gem 'ruby-openai'
