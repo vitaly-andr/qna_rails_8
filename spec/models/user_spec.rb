@@ -3,6 +3,11 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
+
+  before do
+    allow(NotificationService).to receive(:call)
+  end
+
   describe '#author_of?' do
     let(:user) { create(:user) }
     let(:other_user) { create(:user) }

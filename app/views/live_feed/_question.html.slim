@@ -1,0 +1,18 @@
+= turbo_frame_tag dom_id(question) do
+  .card
+    .card-header
+      .card-header-title
+        = link_to question.title, question_path(question)
+
+    .card-content
+      .content
+        p= question.body
+      = render partial: 'comments/comments', locals: { commentable: question }
+
+      - if question.answers.any?
+        ul id="#{dom_id(question)}_answers" class="answers mt-3"
+          - question.answers.each do |answer|
+            = render partial: 'live_feed/answer', locals: { answer: answer }
+      - else
+        ul id="#{dom_id(question)}_answers" class="answers mt-3"
+          p.no-answers id="no-answers-#{question.id}" No answers yet...

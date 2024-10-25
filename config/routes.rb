@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get "flowbite-test", to: "flowbite_test#index"
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -11,6 +11,29 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  resources :questions do
+    member do
+      patch :mark_best_answer
+      patch :unmark_best_answer
+    end
+
+    resources :answers, shallow: true, except: [ :index, :show ] do
+      resources :comments, shallow: true, only: [ :new, :create ]
+      resource :subscriptions, only: [:create, :destroy], shallow: true
+
+    end
+    resource :subscriptions, only: [:create, :destroy], shallow: true
+
+    resources :comments, shallow: true, only: [ :new, :create ]
+  end
+  resources :attachments, only: [ :destroy ]
+  resources :links, only: [ :destroy ]
+  resources :rewards, only: :index
+  resources :votes, only: [ :create ] do
+    collection do
+      delete :destroy, to: 'votes#destroy', as: 'delete_vote'
+    end
+  end
+  resources :live_feed, only: [ :index ]
+
 end

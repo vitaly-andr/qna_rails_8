@@ -1,0 +1,13 @@
+= form_with(model: comment, url: polymorphic_path([commentable, Comment])) do |f|
+  - if comment.errors.any?
+    .notification.is-danger
+      p There were errors with your submission:
+      ul
+        - comment.errors.full_messages.each do |message|
+          li= message
+  .field
+    .control
+      = f.text_area :body, placeholder: "Add a comment", class: 'textarea'
+  .field.mt-3
+    .control
+      = f.submit 'Comment', class: 'button is-primary'

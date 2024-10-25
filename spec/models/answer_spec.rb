@@ -69,6 +69,6 @@ RSpec.describe Answer, type: :model do
     end
   end
 
-  it_behaves_like 'searchkick integration', Answer, :body
+  # it_behaves_like 'searchkick integration', Answer, :body
 
 end

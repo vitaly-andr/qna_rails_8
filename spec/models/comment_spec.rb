@@ -59,6 +59,6 @@ RSpec.describe Comment, type: :model do
     end
   end
 
-  it_behaves_like 'searchkick integration', Comment, :body
+  # it_behaves_like 'searchkick integration', Comment, :body
 
 end

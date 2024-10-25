@@ -1,0 +1,17 @@
+.comments-section.mt-5
+  h4.title.is-4.has-text-grey Comments
+
+  = turbo_frame_tag dom_id(commentable, :comments) do
+
+    - if commentable.comments.any?
+      ul
+        - commentable.comments.each do |comment|
+          = render partial: 'comments/comment', locals: { comment: comment }
+
+    - else
+      p.has-text-grey-light id=dom_id(commentable, :no_comments) No comments yet...
+
+      = turbo_frame_tag dom_id(commentable, :new_comment) do
+        = turbo_frame_tag dom_id(commentable, :form) do
+          = link_to "Comment", new_polymorphic_path([commentable, Comment]), class: "button is-small is-light", remote: true
+

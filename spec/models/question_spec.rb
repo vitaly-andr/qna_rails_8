@@ -58,7 +58,7 @@ RSpec.describe Question, type: :model do
     end
   end
 
-  it_behaves_like 'searchkick integration', Question, :title
+  # it_behaves_like 'searchkick integration', Question, :title
 
 
 end

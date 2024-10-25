@@ -84,9 +84,11 @@ RSpec.configure do |config|
   end
   config.include FactoryBot::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, type: :controller
-  config.include ControllerHelpers, type: :controller
-  config.include FeatureHelpers, type: :feature
-  config.include FeatureHelpers, type: :system
+  # config.include ControllerHelpers, type: :controller
+  # config.include FeatureHelpers, type: :feature
+  # config.include FeatureHelpers, type: :system
+  config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Warden::Test::Helpers
   config.include ActionView::RecordIdentifier, type: :feature
   config.include ActionView::RecordIdentifier, type: :system
   config.include ActionCable::TestHelper, type: :channel

@@ -1,0 +1,10 @@
+= turbo_frame_tag 'main' do
+  h1.title Live Feed
+
+  = turbo_stream_from "questions"
+
+  .section
+    .container
+      ul id="questions"
+        - @questions.each do |question|
+          = render partial: 'live_feed/question', locals: { question: question }
