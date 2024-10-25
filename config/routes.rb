@@ -38,5 +38,25 @@ Rails.application.routes.draw do
   root "questions#index"
   get 'search', to: 'search#index'
 
+  use_doorkeeper do
+    controllers applications: 'oauth/applications'
+  end
+
+  namespace :api do
+    namespace :v1 do
+      use_doorkeeper
+
+      resources :profiles, only: [:index] do
+        get 'me', on: :collection
+      end
+
+      resources :questions, shallow: true, except: [:new, :edit] do
+        resources :answers, shallow: true, only: [:index, :create, :update, :destroy] do
+          resources :comments, shallow: true, only: [:index]
+        end
+        resources :comments, shallow: true, only: [:index]
+      end
+    end
+  end
 
 end

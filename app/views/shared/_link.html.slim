@@ -1,0 +1,22 @@
+- if link.gist?
+  .gist-preview id=dom_id(link)
+    = link_to link.name.to_s, link.url, target: '_blank'
+    div data-controller="gist-preview" data-url=link.url
+      div data-gist-preview-target="output"
+        | Loading Gist preview...
+    - if user_signed_in? && current_user.author_of?(link.linkable)
+      = link_to 'X', link_path(link),
+              data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this link?' },
+              class: 'delete-link', style: 'color: red; margin-left: 10px;'
+
+- else
+  li.microlink_card id=dom_id(link)
+    div data-controller="link-preview" data-url=link.url
+      div data-link-preview-target="linkPreview"
+        | Loading link preview...
+    - if user_signed_in? && current_user.author_of?(link.linkable)
+      = link_to 'X', link_path(link),
+              data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this link?' },
+              class: 'delete-link', style: 'color: red; margin-left: 10px;'
+
+

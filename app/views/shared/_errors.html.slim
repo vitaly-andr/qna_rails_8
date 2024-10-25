@@ -1,0 +1,10 @@
+- object = local_assigns[:object] || resource
+- if object&.errors.present?
+  .answer-errors
+    ul
+      - object.errors.full_messages.each do |message|
+        li = message
+- elsif flash.any?
+  - flash.each do |key, message|
+    .flash(class="#{key}")
+      = message
