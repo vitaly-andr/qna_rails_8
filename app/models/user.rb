@@ -3,7 +3,7 @@ class User < ApplicationRecord
   #  :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: %i[github google_oauth2 vkontakte ]
+         :omniauthable, omniauth_providers: %i[github google_oauth2 ]
   has_many :questions, foreign_key: 'author_id'
   has_many :answers, foreign_key: 'author_id'
   has_many :rewards, dependent: :nullify
