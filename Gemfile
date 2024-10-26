@@ -52,7 +52,6 @@ group :development, :test do
   #gems added according to the previous GemFile in rails 7
   gem 'rspec-rails'
   gem "factory_bot_rails"
-  gem 'ffaker'
   gem "simplecov", require: false
   gem 'webmock'
   gem 'letter_opener'
