@@ -1,0 +1,9 @@
+h1 Ваши награды
+
+- @rewards.each do |reward|
+  div
+    h3 = link_to reward.question.title, reward.question
+    p = reward.title
+    = image_tag reward.image.variant(resize_to_limit: [150, 150])
+
+= link_to 'Index', questions_path
