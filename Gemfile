@@ -90,7 +90,7 @@ gem 'aws-sdk-s3', '~> 1.0'
 
 gem 'image_processing'
 gem 'requestjs-rails'
-gem 'jsbundling-rails'
+# gem 'jsbundling-rails'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
