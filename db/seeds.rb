@@ -1,19 +1,15 @@
+# db/seeds.rb
+
 require 'ffaker'
-require 'openai'
 
 Rails.logger.info "Seeding database..."
 
-client = OpenAI::Client.new(
-  access_token: Rails.application.credentials.dig(:openai, :api_key),
-  log_errors: true
-)
-
-def generate_with_retry(client, prompt, max_retries = 3, wait_time = 2)
+def generate_with_retry(prompt_method, *args, max_retries = 3, wait_time = 2)
   retries = 0
 
   begin
-    response = client.chat(parameters: prompt)
-    response.dig("choices", 0, "message", "content").strip
+    result = prompt_method.call(*args)
+    result
   rescue => e
     if (retries += 1) <= max_retries
       Rails.logger.warn "Retry ##{retries} due to error: #{e.message}. Retrying in #{wait_time} seconds..."
@@ -24,46 +20,6 @@ def generate_with_retry(client, prompt, max_retries = 3, wait_time = 2)
       nil
     end
   end
-end
-
-def generate_question(client, topic)
-  prompt = {
-    model: "gpt-4",
-    messages: [
-      { role: "system", content: "You are a helpful assistant." },
-      { role: "user", content: "Create a question related to #{topic} in a Q&A system." }
-    ],
-    temperature: 0.7,
-    max_tokens: 100
-  }
-  result = generate_with_retry(client, prompt)
-  Rails.logger.info "Generated question: #{result}" if result
-  result
-end
-
-def generate_answer(client, question_title, length_type)
-  max_tokens = case length_type
-                 when :short
-                   50
-                 when :medium
-                   100
-                 when :detailed
-                   200
-               end
-
-  prompt = {
-    model: "gpt-4",
-    messages: [
-      { role: "system", content: "You are a helpful assistant." },
-      { role: "user", content: "Provide a #{length_type} answer to the question: #{question_title}" }
-    ],
-    temperature: 0.7,
-    max_tokens: max_tokens
-  }
-
-  result = generate_with_retry(client, prompt)
-  Rails.logger.info "Generated answer (#{length_type}): #{result}" if result
-  result
 end
 
 # Создаем пользователей
@@ -92,10 +48,10 @@ REAL_URLS = [
 
 # Генерация вопросов и ответов
 3.times do
-  question_title = generate_question(client, topics.sample)
+  question_title = generate_with_retry(->(topic) { OpenAiClient.generate_question("Create a question related to #{topic} in a Q&A system.") }, topics.sample)
   next unless question_title
 
-  question_body = generate_question(client, "Provide more details about the question: #{question_title}")
+  question_body = generate_with_retry(->(title) { OpenAiClient.generate_question("Provide more details about the question: #{title}") }, question_title)
   sleep(2)
   question = Question.create!(
     title: question_title,
@@ -109,7 +65,7 @@ REAL_URLS = [
                          ])
 
   [:short, :medium, :detailed].each do |length_type|
-    answer_body = generate_answer(client, question.title, length_type)
+    answer_body = generate_with_retry(->(title, length) { OpenAiClient.generate_answer(title, length) }, question.title, length_type)
     next unless answer_body
 
     answer = question.answers.create!(

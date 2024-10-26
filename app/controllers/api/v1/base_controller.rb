@@ -3,7 +3,7 @@
 module Api
   module V1
     class BaseController < ActionController::API
-      include Pundit
+      include Pundit::Authorization
       include Doorkeeper::Helpers::Controller
 
       before_action :doorkeeper_authorize!
