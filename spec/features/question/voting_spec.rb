@@ -32,6 +32,7 @@ feature 'Voting for a question', %q{
   end
 
   scenario 'Authenticated user cannot vote for their own question', js: true do
+    find('[data-id="user-dropdown"]').click
     click_on 'Sign out'
     sign_in(author)
     visit question_path(question)
@@ -89,6 +90,7 @@ feature 'Voting for a question on index page', %q{
   end
 
   scenario 'Authenticated user cannot vote for their own question on index', js: true do
+    find('[data-id="user-dropdown"]').click
     click_on 'Sign out'
     sign_in(author)
     visit questions_path

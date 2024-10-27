@@ -35,6 +35,6 @@ RSpec.describe 'Google OAuth2', type: :request do
 
     follow_redirect!
 
-    expect(response.body).to include('Logged in as testuser@example.com')
+    expect(response.body).to include('Logged in as Test User')
   end
 end

@@ -18,7 +18,7 @@ feature 'User can add comments to answer', %q{
     within("##{dom_id(answer, :comments)}") do
       click_on 'Comment'
       fill_in 'Add a comment', with: 'This is a new comment on the answer'
-      click_on 'Comment'
+      click_on 'Save comment'
 
       expect(page).to have_content 'This is a new comment on the answer'
       expect(page).to have_content user.name
@@ -28,7 +28,7 @@ feature 'User can add comments to answer', %q{
   scenario 'User tries to add an empty comment to an answer', js: true do
     within("##{dom_id(answer, :comments)}") do
       click_on 'Comment'
-      click_on 'Comment'
+      click_on 'Save comment'
     end
 
     expect(page).to have_content "Body can't be blank"

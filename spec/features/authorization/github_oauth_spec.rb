@@ -22,10 +22,10 @@ RSpec.feature "GitHubOAuth", type: :feature do
 
   scenario 'User signs in via GitHub and is redirected' do
     visit new_user_session_path
-    click_button 'Sign in with GitHub' # Assuming this is the button for GitHub sign-in
+    click_button 'Sign in with GitHub'
 
     expect(page).to have_current_path(root_path)
 
-    expect(page).to have_content('Logged in as githubuser@example.com')
+    expect(page).to have_content('Logged in as Test GitHub User')
   end
 end

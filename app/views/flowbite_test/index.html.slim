@@ -9,6 +9,11 @@
       | Tooltip content
       div.tooltip-arrow[data-popper-arrow]
 
+    button.mt-20.text-white.bg-blue-700.hover:bg-blue-800.focus:ring-4.focus:outline-none.focus:ring-blue-300.font-medium.rounded-lg.text-sm.px-5.py-2.5.text-center.dark:bg-blue-600.dark:hover:bg-blue-700.dark:focus:ring-blue-800[data-tooltip-target="tooltip-animation" type="button"] Animated tooltip
+    div#tooltip-animation.absolute.z-10.invisible.inline-block.px-3.py-2.text-sm.font-medium.text-white.transition-opacity.duration-300.bg-gray-900.rounded-lg.shadow-sm.opacity-0.tooltip.dark:bg-gray-700(role="tooltip")
+      | Tooltip content
+      div.tooltip-arrow[data-popper-arrow]
+
   div#accordion-collapse[data-accordion="collapse"]
     h2#accordion-collapse-heading-1
       button.flex.items-center.justify-between.w-full.p-5.font-medium.rtl:text-right.text-gray-500.border.border-b-0.border-gray-200.rounded-t-xl.focus:ring-4.focus:ring-gray-200.dark:focus:ring-gray-800.dark:border-gray-700.dark:text-gray-400.hover:bg-gray-100.dark:hover:bg-gray-800.gap-3[type="button" data-accordion-target="#accordion-collapse-body-1" aria-expanded="true" aria-controls="accordion-collapse-body-1"]

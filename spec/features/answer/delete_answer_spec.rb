@@ -16,8 +16,10 @@ feature 'Author can delete their answer', %q(
     visit question_path(question)
 
     within "turbo-frame##{dom_id(answer)}" do
-      expect(page).to have_link 'Delete Answer'
-      click_on 'Delete Answer'
+      expect(page).to have_selector "a[data-id='delete-answer-#{answer.id}']"
+      accept_confirm do
+        find("a[data-id='delete-answer-#{answer.id}']").click
+      end
     end
 
     expect(page).to have_content 'Your answer was successfully deleted.'

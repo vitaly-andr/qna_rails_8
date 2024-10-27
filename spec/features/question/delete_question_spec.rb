@@ -13,11 +13,11 @@ feature 'Author can delete their question', %q(
   scenario 'Author tries to delete their question from the question page' do
     sign_in(user)
     visit question_path(question)
-    within "turbo-frame##{dom_id(question)}" do
-      expect(page).to have_link 'Delete Question'
-      click_on 'Delete Question'
-
-      expect(current_path).to eq questions_path
+    within("turbo-frame##{dom_id(question)}") do
+      expect(page).to have_selector "a[data-turbo-method='delete'][href='#{question_path(question)}']"
+      accept_confirm do
+        find("a[data-turbo-method='delete'][href='#{question_path(question)}']").click
+      end
     end
     expect(page).to_not have_selector "turbo-frame##{dom_id(question)}"
   end
@@ -33,12 +33,11 @@ feature 'Author can delete their question', %q(
     sign_in(user)
     visit questions_path
 
-    within "turbo-frame##{dom_id(question)}" do
-      expect(page).to have_link 'Delete Question'
+    within("turbo-frame##{dom_id(question)}") do
+      expect(page).to have_selector "a[data-turbo-method='delete'][href='#{question_path(question)}']"
       accept_confirm do
-        click_on 'Delete Question'
+        find("a[data-turbo-method='delete'][href='#{question_path(question)}']").click
       end
-
     end
 
     expect(page).to have_content 'Your question was successfully deleted.'
@@ -48,8 +47,8 @@ feature 'Author can delete their question', %q(
   scenario 'Non-author tries to delete someone else’s question from the index page' do
     sign_in(other_user)
     visit questions_path
-    within "turbo-frame##{dom_id(question)}" do
-      expect(page).to_not have_link 'Delete Question'
+    within("turbo-frame##{dom_id(question)}") do
+      expect(page).to_not have_selector "a[data-turbo-method='delete'][href='#{question_path(question)}']"
     end
   end
 end

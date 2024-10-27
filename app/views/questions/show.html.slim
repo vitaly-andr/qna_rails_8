@@ -1,17 +1,13 @@
 = turbo_frame_tag 'main' do
-  .outer-container
-    = link_to 'Index', questions_path
-    = link_to 'Live Feed', live_feed_index_path
-    section.show data-controller="reload-on-best-answer" data-reload-on-best-answer-target="bestAnswer"
-      = render partial: 'questions/question', locals: { question: @question }
-      h2 Answers
-      = turbo_frame_tag "answers" do
-        = render 'answers/answers_list'
+  section.show data-controller="reload-on-best-answer" data-reload-on-best-answer-target="bestAnswer"
+    = render partial: 'questions/question', locals: { question: @question }
+    = turbo_frame_tag "answers" do
+      = render 'answers/answers_list'
 
-      - if user_signed_in? && policy(Answer).create?
-        h3 Write your answer
+    - if user_signed_in? && policy(Answer).create?
+      h3 Write your answer
 
-        #answer_form
-          = render 'answers/form', question: @question, answer: @answer || Answer.new
-      - else
-        p You need to sign in or sign up before creating answers.
+      #answer_form
+        = render 'answers/form', question: @question, answer: @answer || Answer.new
+    - else
+      p You need to sign in or sign up before creating answers.

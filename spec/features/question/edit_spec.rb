@@ -17,8 +17,9 @@ feature 'Author can edit their question', %q(
     sign_in(user)
     visit questions_path
 
-    within "turbo-frame##{dom_id(question)}" do
-      click_on 'Edit Question'
+    within("turbo-frame##{dom_id(question)}") do
+      expect(page).to have_selector "a[href='#{edit_question_path(question)}'][data-turbo-frame='#{dom_id(question)}']"
+      find("a[href='#{edit_question_path(question)}'][data-turbo-frame='#{dom_id(question)}']").click
 
       fill_in 'Title', with: 'Edited Question Title'
       fill_in 'Body', with: 'Edited Question Body'
@@ -60,8 +61,9 @@ feature 'Author can edit their question', %q(
     sign_in(user)
     visit questions_path
 
-    within "turbo-frame##{dom_id(question)}" do
-      click_on 'Edit Question'
+    within("turbo-frame##{dom_id(question)}") do
+      expect(page).to have_selector "a[href='#{edit_question_path(question)}'][data-turbo-frame='#{dom_id(question)}']"
+      find("a[href='#{edit_question_path(question)}'][data-turbo-frame='#{dom_id(question)}']").click
 
       fill_in 'Title', with: 'Edited Question Title'
       fill_in 'Body', with: 'Edited Question Body'
@@ -100,9 +102,9 @@ feature 'Author can edit their question', %q(
     sign_in(user)
     visit questions_path
 
-    within "turbo-frame##{dom_id(question)}" do
-      click_on 'Edit Question'
-
+    within("turbo-frame##{dom_id(question)}") do
+      expect(page).to have_selector "a[href='#{edit_question_path(question)}'][data-turbo-frame='#{dom_id(question)}']"
+      find("a[href='#{edit_question_path(question)}'][data-turbo-frame='#{dom_id(question)}']").click
       fill_in 'Title', with: ''
       fill_in 'Body', with: ''
 
@@ -124,8 +126,9 @@ feature 'Author can edit their question', %q(
     sign_in(user)
     visit question_path(question)
 
-    click_on 'Edit Question'
-    within "turbo-frame##{dom_id(question)}" do
+    within("turbo-frame##{dom_id(question)}") do
+      expect(page).to have_selector "a[href='#{edit_question_path(question)}'][data-turbo-frame='#{dom_id(question)}']"
+      find("a[href='#{edit_question_path(question)}'][data-turbo-frame='#{dom_id(question)}']").click
 
       fill_in 'Title', with: 'Edited Question Title on Show'
       fill_in 'Body', with: 'Edited Question Body on Show'

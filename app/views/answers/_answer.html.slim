@@ -1,58 +1,78 @@
 = turbo_frame_tag dom_id(answer) do
-  - if answer.body.present?
-    li.answer id="answer-#{answer.id}" class=(answer == @question.best_answer ? 'best-answer' : 'answer')
-      header.card-header
-        p.subtitle Answered by: #{answer.author.email}
-      .card-content
-        div
-          p.content.mb-4 = answer.body
+  li.answer id="answer-#{answer.id}" class=(answer == @question.best_answer ? 'best-answer' : 'answer')
+    .inline-flex.items-center.justify-center.w-full
+      hr.w-64.h-1.my-8.bg-gray-200.border-0.rounded.dark:bg-gray-700
+      .absolute.px-4.-translate-x-1/2.bg-white.left-1/2.dark:bg-gray-900
+        svg.w-4.h-4.text-gray-700.dark:text-gray-300(aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 14")
+          path(d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3H2a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3h-1a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Z")
+    main.pb-16.lg:pt-16.lg:pb-24.bg-white.dark:bg-gray-900.antialiased
+      .flex.justify-between.px-4.mx-auto.max-w-screen-xl
+        article.mx-auto.w-full.max-w-3xl.format.format-sm.sm:format-base.lg:format-lg.format-blue.dark:format-invert
+          header.mb-4.lg:mb-6.not-format
+            address.flex.items-center.mb-6.not-italic
+              .inline-flex.items-center.mr-3.text-sm.text-gray-900.dark:text-white
+                img.mr-4.w-16.h-16.rounded-full src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Author"
+                div
+                  p.text-xl.font-bold.text-gray-900.dark:text-white Answered by: #{answer.author.email}
+                  p.text-base.text-gray-500.dark:text-gray-400
+                    time datetime=answer.created_at.iso8601 title=answer.created_at.strftime("%B %d, %Y")
+                      = answer.created_at.strftime("%b. %d, %Y")
+
+            .inline-flex.items-center.justify-between.w-full.mr-3.text-sm.text-gray-900.dark:text-white
+              - if user_signed_in? && current_user.author_of?(answer)
+                button.flex.items-center.font-medium.text-sm.text-gray-500.hover:underline.dark:text-gray-400 type="button"
+                  = link_to 'Edit Answer', edit_answer_path(answer), data: { turbo_frame: dom_id(answer), id: "edit-answer-#{answer.id}" }
+                button.flex.items-center.font-medium.text-sm.text-gray-500.hover:underline.dark:text-gray-400 type="button"
+                  = link_to 'Delete Answer', answer_path(answer),
+                          data: { turbo_method: :delete,
+                                  id: "delete-answer-#{answer.id}",
+                                  turbo_confirm: 'Are you sure?',
+                                  turbo_action: 'advance',
+                          }
+              - if user_signed_in? && current_user.author_of?(answer.question) && answer.persisted?
+                - if answer == @question.best_answer
+                  = button_to 'Unmark Best', unmark_best_answer_question_path(@question, answer_id: answer.id), data: { turbo_method: :patch }, method: :patch, class: 'button is-dark'
+                - else
+                  = button_to 'Mark as Best', mark_best_answer_question_path(@question, answer_id: answer.id), method: :patch, data: { turbo_method: :patch }, class: 'button is-warning'
+              = render partial: 'subscriptions/subscription_button', locals: { subscribable: answer }
+
+          p = truncate(answer.body, length: 100)
           - if user_signed_in? && !current_user.author_of?(answer)
             .nav.level.is-mobile.vote-area id=dom_id(answer) data-controller="vote" data-vote-votable-id="#{answer.id}" data-vote-votable-type="Answer"
               p#error-message.is-hidden data-vote-target="errorMessage"
-              .level-right
-                p.level-item Rating:
-                span.level-item.vote__rating data-vote-target="rating"= answer.rating
-                a.level-item
-                  span.vote__up data-action="click->vote#upvote"
-                    = image_tag 'thumbs-up.svg', class: 'icon is-small icon-success'
-                a.level-item
-                  span.vote__down data-action="click->vote#downvote"
-                    = image_tag 'thumbs-down.svg', class: 'icon is-small'
-                a.level-item
-                  span.vote__cancel data-action="click->vote#cancelVote"
-                    = image_tag 'trash-can.svg', class: 'icon is-small'
-          .title.has-text-centered Attachments
-          .columns
-            .column.is-half
-              .title.has-text-centered Links:
-              .section#answer-links
-                ul
-                  - answer.links.each do |link|
-                    li = render partial: 'shared/link', locals: { link: link }
-            .column.is-half
-              .title.has-text-centered Files:
-              - if answer.files.attached?
-                ul.attachments
-                  - answer.files.each do |file|
-                    li id="file_#{file.id}"
-                      = link_to file.filename.to_s, url_for(file)
-                      - if user_signed_in? && current_user.author_of?(answer)
-                        = link_to 'X', attachment_path(file),
-                                data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this file?' },
-                                class: 'delete-file-link',
-                                style: 'color: red; margin-left: 10px;'
-          - if user_signed_in? && current_user.author_of?(answer.question) && answer.persisted?
-            - if answer == @question.best_answer
-              = button_to 'Unmark Best', unmark_best_answer_question_path(@question, answer_id: answer.id), data: { turbo_method: :patch }, method: :patch, class: 'button is-dark'
-            - else
-              = button_to 'Mark as Best', mark_best_answer_question_path(@question, answer_id: answer.id), method: :patch, data: { turbo_method: :patch }, class: 'button is-warning'
-        = render partial: 'comments/comments', locals: { commentable: answer }
-        = render partial: 'subscriptions/subscription_button', locals: { subscribable: answer }
+              .div.flex.items-center.mt-4.space-x-4
+                button.flex.items-center.font-medium.text-sm.text-gray-500.hover:underline.dark:text-gray-400 type="button"
+                  span.mx-1.vote__up data-action="click->vote#upvote"
+                    = image_tag 'thumbs-up.svg', class: 'w-8 h-8'
+                  span.mx-1.vote__down data-action="click->vote#downvote"
+                    = image_tag 'thumbs-down.svg', class: 'w-8 h-8'
+                  span.mx-1.vote__cancel data-action="click->vote#cancelVote"
+                    = image_tag 'trash-can.svg', class: 'w-8 h-8'
+                  | Rating:
+                  span.level-item.vote__rating data-vote-target="rating"= answer.rating
 
-        - if user_signed_in? && current_user.author_of?(answer) && answer.persisted?
-          .card-footer
-            .card-footer-item
-              = link_to 'Edit', edit_answer_path(answer), data: { turbo_frame: dom_id(answer) }
-            .card-footer-item
-              = link_to 'Delete Answer', answer_path(answer), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }
+          - if answer.links.any? || answer.files.attached?
+            .title.has-text-centered Attachments
+            .columns
+              - if answer.links.any?
+                .column.is-half
+                  .title.has-text-centered Links:
+                  .section#answer-links
+                    ul
+                      - answer.links.each do |link|
+                        li = render partial: 'shared/link', locals: { link: link }
+              .column.is-half
+                .title.has-text-centered Files:
+                - if answer.files.attached?
+                  ul.attachments
+                    - answer.files.each do |file|
+                      li id="file_#{file.id}"
+                        = link_to file.filename.to_s, url_for(file)
+                        - if user_signed_in? && current_user.author_of?(answer)
+                          = link_to 'X', attachment_path(file),
+                                  data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this file?' },
+                                  class: 'delete-file-link',
+                                  style: 'color: red; margin-left: 10px;'
 
+
+          = render partial: 'comments/comments', locals: { commentable: answer }

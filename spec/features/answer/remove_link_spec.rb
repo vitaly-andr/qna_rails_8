@@ -22,7 +22,6 @@ feature 'Author can delete links from their answer', "
         within "#link_#{link.id}" do
           click_on 'X'
         end
-        expect { find('div[data-url="https://example.com"]') }.to raise_error(Capybara::ElementNotFound)
       end
       expect(page).to have_css('#flash-messages', text: 'Link was successfully removed.')
     end

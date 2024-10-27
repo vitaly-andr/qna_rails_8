@@ -18,8 +18,6 @@ feature 'User can register', %q(
 
     click_on 'Sign up'
 
-    save_and_open_page
-
     expect(page).to have_content 'confirmation link has been sent '
   end
 

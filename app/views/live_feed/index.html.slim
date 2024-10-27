@@ -1,5 +1,7 @@
 = turbo_frame_tag 'main' do
-  h1.title Live Feed
+  .bg-blue-600.text-white.dark:bg-gray-900.dark:text-gray-300.py-8
+    .container.mx-auto.px-4.text-center
+      h1.text-4xl.font-bold.mb-4 Live Feed
 
   = turbo_stream_from "questions"
 

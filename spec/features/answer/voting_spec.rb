@@ -32,6 +32,7 @@ feature 'Voting for an answer', %q{
   end
 
   scenario 'Authenticated user cannot vote for their own answer', js: true do
+    find('[data-id="user-dropdown"]').click
     click_on 'Sign out'
     sign_in(author)
     visit question_path(question)

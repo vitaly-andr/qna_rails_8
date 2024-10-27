@@ -19,7 +19,8 @@ feature 'Author can edit their answer', %q(
     visit question_path(question)
 
     within "turbo-frame##{dom_id(answer)}" do
-      click_on 'Edit'
+      expect(page).to have_selector "a[data-id='edit-answer-#{answer.id}']"
+      find("a[data-id='edit-answer-#{answer.id}']").click
 
       fill_in 'Your Answer', with: 'Edited answer'
 
@@ -55,7 +56,8 @@ feature 'Author can edit their answer', %q(
     visit question_path(question)
 
     within "turbo-frame##{dom_id(answer)}" do
-      click_on 'Edit'
+      expect(page).to have_selector "a[data-id='edit-answer-#{answer.id}']"
+      find("a[data-id='edit-answer-#{answer.id}']").click
 
       fill_in 'Your Answer', with: ''
 

@@ -102,10 +102,10 @@ gem 'pundit'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'doorkeeper'
 gem 'oj'
-gem 'sidekiq'
-gem 'sinatra', require: false
-gem 'whenever', require: false
-gem 'elasticsearch', '~> 8.0'
-gem 'searchkick'
-gem 'ruby-openai'
+# gem 'sidekiq'
+# gem 'sinatra', require: false
+# gem 'whenever', require: false
+# gem 'elasticsearch', '~> 8.0'
+# gem 'searchkick'
+# gem 'ruby-openai'
 gem 'ffaker'

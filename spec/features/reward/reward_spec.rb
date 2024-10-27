@@ -40,6 +40,8 @@ feature 'Reward system', %q(
 
     click_on 'Save'
 
+    find('[data-id="user-dropdown"]').click
+
     click_on 'Sign out'
     sign_in(another_user)
 
@@ -49,7 +51,7 @@ feature 'Reward system', %q(
     answer = Answer.last
 
     expect(page).to have_content('Answer body')
-
+    find('[data-id="user-dropdown"]').click
     click_on 'Sign out'
     sign_in(user)
 
@@ -59,6 +61,7 @@ feature 'Reward system', %q(
     end
 
     expect(page).to have_content('Answer body')
+    find('[data-id="user-dropdown"]').click
 
     click_on 'Sign out'
     sign_in(another_user)

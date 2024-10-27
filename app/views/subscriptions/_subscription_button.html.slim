@@ -1,9 +1,19 @@
 = turbo_frame_tag dom_id(subscribable, :subscription) do
+  - tooltip_id = dom_id(subscribable, :tooltip)
   - if subscribable.subscribed?(current_user)
-    = link_to polymorphic_path([subscribable, :subscriptions]), data: { turbo_method: :delete }, remote: true, class: "button is-warning is-light" do
-      span.icon.is-medium
-        = image_tag "bell-slash.svg"
+    button.text-white.focus:ring-4.focus:outline-none.focus:ring-blue-300.font-medium.rounded-lg.text-sm.px-5.py-2.5.text-center.dark:focus:ring-blue-800 data-tooltip-target=tooltip_id type="button"
+      = link_to polymorphic_path([subscribable, :subscriptions]), data: { turbo_method: :delete }, remote: true, class: "button is-warning is-light" do
+        span.icon.is-medium
+          = image_tag "bell-slash.svg", class: 'w-8 h-8 dark:filter dark:invert'
+    div id=tooltip_id role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 dark:bg-gray-700"
+      | Unsubscribe
+      div.tooltip-arrow[data-popper-arrow]
+
   - else
-    = link_to polymorphic_path([subscribable, :subscriptions]), data: { turbo_method: :post }, remote: true, class: "button is-primary is-light" do
-      span.icon.is-medium
-        = image_tag "bell.svg"
+    button.text-white.focus:ring-4.focus:outline-none.focus:ring-blue-300.font-medium.rounded-lg.text-sm.px-5.py-2.5.text-center.dark:focus:ring-blue-800 data-tooltip-target=tooltip_id type="button"
+      = link_to polymorphic_path([subscribable, :subscriptions]), data: { turbo_method: :post }, remote: true, class: "button is-primary is-light" do
+        span.icon.is-medium
+          = image_tag "bell.svg", class: 'w-8 h-8 dark:filter dark:invert'
+    div id=tooltip_id role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 dark:bg-gray-700"
+      | Subscribe
+      div.tooltip-arrow[data-popper-arrow]

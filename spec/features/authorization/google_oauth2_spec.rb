@@ -24,6 +24,6 @@ RSpec.feature "GoogleOAuth", type: :feature do
 
     expect(page).to have_current_path(root_path)
 
-    expect(page).to have_content('Logged in as googleuser@example.com')
+    expect(page).to have_content('Logged in as Test Google User')
   end
 end

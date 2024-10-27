@@ -50,7 +50,6 @@ feature 'User can create question', %q(
       end
 
       within all('.nested-fields').first do
-        save_and_open_page
 
         click_on 'Remove'
       end
