@@ -54,12 +54,12 @@ Rails.logger.info "Creating questions and answers..."
 3.times do
   topic = topics.sample
 
-  question_title = generate_with_retry(-> { OpenAiClient.generate_question("Create a question related to #{topic} in a Q&A system.") })
+  question_title = generate_with_retry(-> { OpenAiClient.generate_question("Create a question title 5-10 words related to #{topic} in a Q&A system.") })
 
   if question_title
     Rails.logger.info "Generated question title: #{question_title}"
 
-    question_body = generate_with_retry(-> { OpenAiClient.generate_question("Provide more details about the question: #{question_title}") })
+    question_body = generate_with_retry(-> { OpenAiClient.generate_question("Provide question description for the question title: #{question_title}") })
     Rails.logger.info "Generated question body: #{question_body}"
 
     question = Question.create!(

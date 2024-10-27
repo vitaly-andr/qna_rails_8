@@ -15,7 +15,7 @@ class OpenAiClient
       req.headers['Authorization'] = "Bearer #{api_key}"
       req.headers['Content-Type'] = 'application/json'
       req.body = {
-        model: "gpt-4",
+        model: "gpt-4o-mini-2024-07-18",
         messages: [
           { role: "system", content: "You are a helpful assistant." },
           { role: "user", content: prompt }
