@@ -16,7 +16,7 @@ class Question < ApplicationRecord
 
   accepts_nested_attributes_for :links, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :reward, allow_destroy: true, reject_if: :all_blank
-  # searchkick
+  searchkick
 
 
   validates :title, :body, presence: true

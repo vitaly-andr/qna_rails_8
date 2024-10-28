@@ -5,7 +5,7 @@ class Answer < ApplicationRecord
   include Votable
   include ActionView::RecordIdentifier
   include Subscribable
-  # searchkick
+  searchkick
 
 
   has_many :comments, as: :commentable, dependent: :destroy

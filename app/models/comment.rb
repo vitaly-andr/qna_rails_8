@@ -1,7 +1,7 @@
 class Comment < ApplicationRecord
   include Authorable
   include ActionView::RecordIdentifier
-  # searchkick
+  searchkick
 
   belongs_to :commentable, polymorphic: true
   validates :body, presence: true

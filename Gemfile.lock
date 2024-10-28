@@ -158,6 +158,14 @@ GEM
     dotenv (3.1.4)
     drb (2.2.1)
     ed25519 (1.3.0)
+    elastic-transport (8.3.5)
+      faraday (< 3)
+      multi_json
+    elasticsearch (8.15.0)
+      elastic-transport (~> 8.3)
+      elasticsearch-api (= 8.15.0)
+    elasticsearch-api (8.15.0)
+      multi_json
     erubi (1.13.0)
     et-orbi (1.2.11)
       tzinfo
@@ -255,6 +263,7 @@ GEM
     mini_mime (1.1.5)
     minitest (5.25.1)
     msgpack (1.7.3)
+    multi_json (1.15.0)
     multi_xml (0.7.1)
       bigdecimal (~> 3.1)
     net-http (0.4.1)
@@ -454,6 +463,9 @@ GEM
       ffi (~> 1.12)
       logger
     rubyzip (2.3.2)
+    searchkick (5.4.0)
+      activemodel (>= 6.1)
+      hashie
     securerandom (0.3.1)
     selenium-webdriver (4.25.0)
       base64 (~> 0.2)
@@ -584,6 +596,7 @@ DEPENDENCIES
   debug
   devise (~> 4.9)
   doorkeeper
+  elasticsearch (~> 8.0)
   factory_bot_rails
   ffaker
   image_processing
@@ -609,6 +622,7 @@ DEPENDENCIES
   rest-client
   rspec-rails
   rubocop-rails-omakase
+  searchkick
   selenium-webdriver
   shoulda-matchers
   simple_form
