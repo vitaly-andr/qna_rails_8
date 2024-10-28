@@ -95,7 +95,18 @@ builder:
 # user: deploy
 
 # Use accessory services (secrets come from .kamal/secrets).
-# accessories:
+
+accessories:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.4
+    host: "127.0.0.1"
+    port: "127.0.0.1:9200:9200"
+    env:
+      clear:
+        discovery.type: single-node
+
+    directories:
+      - data:/usr/share/elasticsearch/data
 #   db:
 #     image: mysql:8.0
 #     host: 192.168.0.2
