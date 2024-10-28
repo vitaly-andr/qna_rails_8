@@ -205,3 +205,32 @@
               td August 23, 2021
               td
                 strong $2,540
+div.flex.h-screen.bg-gray-200
+  div.flex-grow.flex.flex-col style="max-width: calc(100% - 20rem)"
+    div#chat-history.flex-1.overflow-y-auto.p-6.space-y-4.bg-white.flex.flex-col-reverse.messages-container
+    div.px-6.py-2.bg-white.shadow-up
+      = form_with id: "chat-form", class: "flex items-center", local: true do
+        textarea#message-input.flex-grow.m-2.p-2.border.border-chat-border.rounded.shadow-sm.placeholder-chat-placeholder placeholder="Type a message..."
+        button.m-2.px-4.py-2.bg-chat-button.text-black.rounded.hover:bg-gray-300 type="submit" Send
+      div.text-xs.text-gray-500.mt-2
+        p.model-display -
+        input.hidden.message-user.message-assistant.message-model type="hidden"
+  div.w-80.bg-chat-settings.p-6.shadow-xl.flex.flex-col.justify-between
+    div
+      div.mb-4
+        h2.text-xl.font-semibold Chat Settings
+        p.text-sm.text-chat-helpertext.mt-1 Try out different models and configurations for your chat application
+      = form_with local: true do
+        div.mb-4
+          label.block.text-black.text-sm.font-bold.mb-2 Model
+          select#model-select.border.border-chat-border.rounded.w-full.py-2.px-3.text-black.leading-tight.focus:outline-none.focus:shadow-outline
+        div.mb-4
+          label.block.text-black.text-sm.font-bold.mb-2 System Message
+          p.text-sm.text-chat-helpertext.mb-2 Guides the tone of the response
+          textarea#system-message.border.border-chat-border.rounded.w-full.py-2.px-3.text-black.leading-tight.focus:outline-none.focus:shadow-outline placeholder="Enter system message..."
+        button#apply-chat-settings.w-full.px-4.py-2.bg-chat-apply.text-white.rounded.hover:bg-gray-800.focus:outline-none.focus:shadow-outline Apply Changes
+    div.mt-4.text-center.text-sm.text-gray-500.flex.items-center.justify-center
+      span.mr-2.pt-2 Powered by
+      a href="https://developers.cloudflare.com/workers-ai/" target="_blank"
+        img.h-6.inline src="/static/cloudflare-logo.png" alt="Cloudflare Logo"
+  script src="/static/script.js"
