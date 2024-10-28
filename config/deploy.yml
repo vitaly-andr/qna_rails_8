@@ -52,7 +52,7 @@ env:
     # Match this to any external database server to configure Active Record correctly
     # Use qna_rails_8-db for a db accessory server on same machine via local kamal docker network.
     # DB_HOST: 192.168.0.2
-
+    ELASTICSERCH_HOST: qna8-elasticsearch
     # Log everything from Rails
     # RAILS_LOG_LEVEL: debug
 
@@ -70,6 +70,7 @@ aliases:
 volumes:
   - "qna8_storage:/rails/storage"
   - "qna8_elasticsearch_data:/usr/share/elasticsearch/data"
+
 
 # Bridge fingerprinted assets, like JS and CSS, between versions to avoid
 # hitting 404 on in-flight requests. Combines all files from new and old
@@ -107,6 +108,8 @@ accessories:
 
     directories:
       - qna8_elasticsearch_data:/usr/share/elasticsearch/data
+
+
 #   db:
 #     image: mysql:8.0
 #     host: 192.168.0.2
