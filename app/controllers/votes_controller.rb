@@ -20,7 +20,12 @@ class VotesController < ApplicationController
   private
 
   def find_votable
-    @votable = params[:votable_type].classify.constantize.find(params[:votable_id])
+    votable_type = params[:votable_type].classify
+    if %w[Question Answer].include?(votable_type)
+      @votable = votable_type.constantize.find(params[:votable_id])
+    else
+      raise "Invalid votable type"
+    end
   end
 
 end
