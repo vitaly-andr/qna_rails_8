@@ -1,0 +1,61 @@
+= turbo_frame_tag dom_id(answer) do
+  - if answer.body.present?
+    li.answer id="answer-#{answer.id}" class=(answer == @question.best_answer ? 'best-answer' : 'answer')
+      header.card-header
+        div.is-flex.is-justify-content-space-between.is-align-items-center
+          - if answer == @question.best_answer
+            .card-header-title.has-text-warning.has-text-weight-bold.has-text-size-1 Best answer
+          p.subtitle.has-text-right Answered by: #{answer.author.email}
+
+      .card-content
+        div
+          p.content.mb-4 = answer.body
+          - if user_signed_in? && !current_user.author_of?(answer)
+            .nav.level.is-mobile.vote-area id=dom_id(answer) data-controller="vote" data-vote-votable-id="#{answer.id}" data-vote-votable-type="Answer"
+              p#error-message.is-hidden data-vote-target="errorMessage"
+              .level-right
+                p.level-item Rating:
+                span.level-item.vote__rating data-vote-target="rating"= answer.rating
+                a.level-item
+                  span.vote__up data-action="click->vote#upvote"
+                    = image_tag 'thumbs-up.svg', class: 'icon is-small icon-success'
+                a.level-item
+                  span.vote__down data-action="click->vote#downvote"
+                    = image_tag 'thumbs-down.svg', class: 'icon is-small'
+                a.level-item
+                  span.vote__cancel data-action="click->vote#cancelVote"
+                    = image_tag 'trash-can.svg', class: 'icon is-small'
+          .title.has-text-centered Attachments
+          .columns
+            .column.is-half
+              .title.has-text-centered Links:
+              .section#answer-links
+                ul
+                  - answer.links.each do |link|
+                    li = render partial: 'shared/link', locals: { link: link }
+            .column.is-half
+              .title.has-text-centered Files:
+              - if answer.files.attached?
+                ul.attachments
+                  - answer.files.each do |file|
+                    li id="file_#{file.id}"
+                      = link_to file.filename.to_s, url_for(file)
+                      - if user_signed_in? && current_user.author_of?(answer)
+                        = link_to 'X', attachment_path(file),
+                                data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this file?' },
+                                class: 'delete-file-link',
+                                style: 'color: red; margin-left: 10px;'
+          - if user_signed_in? && current_user.author_of?(answer.question) && answer.persisted?
+            - if answer == @question.best_answer
+
+              = button_to 'Unmark Best', unmark_best_answer_question_path(@question, answer_id: answer.id), data: { turbo_method: :patch }, method: :patch, class: 'button is-dark'
+            - else
+              = button_to 'Mark as Best', mark_best_answer_question_path(@question, answer_id: answer.id), data: { turbo_method: :patch }, method: :patch, class: 'button is-warning'
+        = render partial: 'comments/comments', locals: { commentable: answer }
+
+        - if user_signed_in? && current_user.author_of?(answer) && answer.persisted?
+          .card-footer
+            .card-footer-item
+              = link_to 'Edit', edit_answer_path(answer), data: { turbo_frame: dom_id(answer) }
+            .card-footer-item
+              = link_to 'Delete Answer', answer_path(answer), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }

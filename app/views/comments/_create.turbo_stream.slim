@@ -1,0 +1,7 @@
+= turbo_stream.prepend dom_id(commentable, :comments) do
+  = render partial: 'comments/comment', locals: { comment: @comment }
+
+= turbo_stream.remove dom_id(commentable, :no_comments)
+
+= turbo_stream.update dom_id(commentable, :form) do
+  = link_to "Comment", new_polymorphic_path([commentable, Comment]), class: "button is-small is-light"

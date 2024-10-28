@@ -1,0 +1,42 @@
+/* Entry point for your PostCSS build */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .btn {
+        @apply text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800
+    }
+
+    .simple_form {
+        .input {
+            @apply flex flex-col;
+
+
+            &.field_with_errors {
+                @apply bg-red-50;
+
+                & > span.error, & > label {
+                    @apply text-red-600 font-medium;
+                }
+            }
+
+            & ~ & {
+                @apply mt-4;
+            }
+
+            &:last-of-type {
+                @apply mb-8;
+            }
+            span.hint {
+                @apply text-gray-500 text-xs italic;
+            }
+
+            span.error {
+                @apply text-red-500 text-xs italic;
+            }
+        }
+
+    }
+
+}

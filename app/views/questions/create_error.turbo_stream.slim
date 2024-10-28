@@ -1,0 +1,4 @@
+/# locals: (question:, message: )
+= turbo_stream.replace 'main' do
+  = render template: 'questions/new', locals: { question: question }
+/ = render_flash_notice(message)

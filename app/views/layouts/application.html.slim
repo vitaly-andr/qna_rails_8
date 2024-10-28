@@ -1,0 +1,82 @@
+doctype html
+html
+  head
+    title = content_for(:title) || "Qna Rails 8"
+    meta name="viewport" content="width=device-width,initial-scale=1"
+    meta name="apple-mobile-web-app-capable" content="yes"
+    meta name="mobile-web-app-capable" content="yes"
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = yield :head
+
+    / Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!)
+    / = tag.link rel: "manifest", href: pwa_manifest_path(format: :json)
+
+    link rel="icon" href="/icon.png" type="image/png"
+    link rel="icon" href="/icon.svg" type="image/svg+xml"
+    link rel="apple-touch-icon" href="/icon.png"
+
+    / Includes all stylesheet files in app/assets/stylesheets
+    = stylesheet_link_tag :app, "data-turbo-track": "reload"
+    = javascript_importmap_tags
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+
+  body.dark:bg-gray-900.antialiased
+    / Sticky navbar>
+    nav.bg-white.dark:bg-gray-900.fixed.w-full.z-20.top-0.start-0.border-b.border-gray-200.dark:border-gray-600
+      .max-w-screen-xl.flex.flex-wrap.items-center.justify-between.mx-auto.p-4
+        = link_to questions_path, class: 'flex items-center space-x-3 rtl:space-x-reverse' do
+          = image_tag 'so-logo.png', alt: 'Stack Overflow Logo', class: 'h-8'
+          span.self-center.text-2xl.font-semibold.whitespace-nowrap.dark:text-white QNA Rails 8
+
+
+        .flex.md:order-2.space-x-3.md:space-x-0.rtl:space-x-reverse
+          - if user_signed_in?
+            button#dropdownHoverButton.text-white.bg-blue-700.hover:bg-blue-800.focus:ring-4.focus:outline-none.focus:ring-blue-300.font-medium.rounded-lg.text-sm.px-5.py-2.5.text-center.inline-flex.items-center.space-x-2 type="button" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover"  data-id="user-dropdown"
+              | Logged in as #{current_user.name}
+              svg.ml-2.w-4.h-4 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6" aria-hidden="true"
+                path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1l4 4 4-4")
+            #dropdownHover.z-10.hidden.bg-white.divide-y.divide-gray-100.rounded-lg.shadow.w-44.dark:bg-gray-700
+              ul.py-2.text-sm.text-gray-700.dark:text-gray-200 aria-labelledby="dropdownHoverButton"
+                li
+                  a.block.px-4.py-2.hover:bg-gray-100.dark:hover:bg-gray-600.dark:hover:text-white
+                    | #{current_user.email}
+                li
+                  a.block.px-4.py-2.hover:bg-gray-100.dark:hover:bg-gray-600.dark:hover:text-white href=rewards_path
+                    | Rewards
+                li
+                  a.block.px-4.py-2.hover:bg-gray-100.dark:hover:bg-gray-600.dark:hover:text-white href=oauth_applications_path
+                    | API keys
+                li
+                  a.block.px-4.py-2.hover:bg-gray-100.dark:hover:bg-gray-600.dark:hover:text-white href=destroy_user_session_path data-turbo-method="delete"
+                    | Sign out
+          - else
+            a.text-white.bg-blue-700.hover:bg-blue-800.focus:ring-4.focus:outline-none.focus:ring-blue-300.font-medium.rounded-lg.text-sm.px-5.py-2.5 href=new_user_session_path
+              | Sign in
+
+          button#theme-toggle type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 mr-2" data-controller="theme" data-action="click->theme#toggle"
+            svg#theme-toggle-dark-icon.hidden.w-5.h-5 fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-theme-target="darkIcon"
+              path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+            svg#theme-toggle-light-icon.hidden.w-5.h-5 fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-theme-target="lightIcon"
+              path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"
+          / button.text-white.bg-blue-700.hover:bg-blue-800.focus:ring-4.focus:outline-none.focus:ring-blue-300.font-medium.rounded-lg.text-sm.px-4.py-2.text-center.dark:bg-blue-600.dark:hover:bg-blue-700.dark:focus:ring-blue-800 Get started
+          button.inline-flex.items-center.p-2.w-10.h-10.justify-center.text-sm.text-gray-500.rounded-lg.md:hidden.hover:bg-gray-100.focus:outline-none.focus:ring-2.focus:ring-gray-200.dark:text-gray-400.dark:hover:bg-gray-700.dark:focus:ring-gray-600 type="button" data-collapse-toggle="navbar-sticky" aria-controls="navbar-sticky" aria-expanded="false"
+            span.sr-only Open main menu
+            svg.w-5.h-5 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14"
+              path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15")
+
+        #navbar-sticky.items-center.justify-between.hidden.w-full.md:flex.md:w-auto.md:order-1
+          ul.flex.flex-col.p-4.md:p-0.mt-4.font-medium.border.border-gray-100.rounded-lg.bg-gray-50.md:space-x-8.rtl:space-x-reverse.md:flex-row.md:mt-0.md:border-0.md:bg-white.dark:bg-gray-800.md:dark:bg-gray-900.dark:border-gray-700
+            li
+              = link_to 'Questions', questions_path, class: "block py-2 px-3 rounded md:bg-transparent md:p-0 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent #{'bg-blue-700 text-white md:text-blue-700 md:dark:text-blue-500' if current_page?(questions_path)}", 'aria-current': 'page'
+            li
+              = link_to 'Live Feed', live_feed_index_path, class: "block py-2 px-3 rounded md:bg-transparent md:p-0 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent #{'text-white bg-blue-700 md:text-blue-700 md:dark:text-blue-500' if current_page?(live_feed_index_path)}"
+            li
+              = link_to 'Search', search_path, target: "_top", class: "block py-2 px-3 rounded md:bg-transparent md:p-0 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent #{'text-white bg-blue-700 md:text-blue-700 md:dark:text-blue-500' if current_page?(search_path)}"
+            li
+              a.block.py-2.px-3.text-gray-900.rounded.hover:bg-gray-100.md:hover:bg-transparent.md:hover:text-blue-700.md:p-0.md:dark:hover:text-blue-500.dark:text-white.dark:hover:bg-gray-700.dark:hover:text-white.md:dark:hover:bg-transparent.dark:border-gray-700 Contact
+    .content.mt-20
+      = turbo_frame_tag 'flash-messages' do
+        = render 'shared/flash'
+      = yield

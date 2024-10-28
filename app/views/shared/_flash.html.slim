@@ -1,0 +1,4 @@
+= turbo_frame_tag 'flash-messages' do
+  - flash.each do |key, message|
+    div class="#{key}"
+      = message

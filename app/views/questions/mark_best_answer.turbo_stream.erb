@@ -1,0 +1,13 @@
+<% if @previous_best_answer %>
+  <%= turbo_stream.replace dom_id(@previous_best_answer) do %>
+    <%= render @previous_best_answer %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace dom_id(@answer) do %>
+  <%= render @answer %>
+<% end %>
+
+<%= turbo_stream.replace 'reloadTrigger' do %>
+  <div>Updated content at <%= Time.current.to_i %></div>
+<% end %>

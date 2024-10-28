@@ -1,0 +1,6 @@
+= turbo_frame_tag dom_id(answer) do
+  li
+    .card.is-answered.ml-5.mt-3
+      .card-content
+        p= answer.body
+      = render partial: 'comments/comments', locals: { commentable: answer }

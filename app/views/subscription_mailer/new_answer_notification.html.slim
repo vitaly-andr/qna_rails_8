@@ -1,0 +1,18 @@
+h1 New Answer to "#{@question.title}"
+
+p Hello #{@subscriber.email},
+
+p A new answer has been posted to a question you're subscribed to:
+
+h2 Question:
+p= @question.body
+
+h2 Answer:
+p= @answer.body
+
+p
+  | View the answer:
+  = link_to 'Click here to view the answer', @answer_url
+
+p Best regards,
+p Your Application Team

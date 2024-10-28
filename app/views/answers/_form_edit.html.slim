@@ -1,0 +1,8 @@
+= form_with model: answer, url: answer_path(answer), method: :patch, id: 'answer_form', remote: true, data: { controller: 'links' } do |f|
+  = render 'answers/form_fields', f: f, answer: answer
+
+  div
+    = f.submit 'Update Answer'
+
+  // Reuse the link template partial
+  = render 'shared/link_template', f: f

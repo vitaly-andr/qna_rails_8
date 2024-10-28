@@ -1,0 +1,7 @@
+= turbo_stream.append 'answers' do
+  = render partial: 'answers/answer', locals: { answer: @answer }
+
+= render_flash_notice('Answer was successfully created.')
+
+= turbo_stream.replace 'answer_form' do
+  = render partial: 'answers/form', locals: { answer: @new_answer, question: @question }
