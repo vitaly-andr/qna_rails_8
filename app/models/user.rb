@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :answers, foreign_key: 'author_id'
   has_many :rewards, dependent: :nullify
   validates :name, presence: true
-  # searchkick
+  searchkick
 
   def self.from_omniauth(auth, emails = [])
     email = (emails.first&.downcase&.strip || auth.info.email&.downcase&.strip).to_s
