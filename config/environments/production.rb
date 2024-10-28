@@ -59,7 +59,10 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  config.action_mailer.default_url_options = { host: 'dev.andrianoff.online'}
+  config.action_mailer.default_options = {from: 'QNA <noreply@andrianoff.online>'}
+
+  config.hosts << "dev.andrianoff.online"
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
   # config.action_mailer.smtp_settings = {

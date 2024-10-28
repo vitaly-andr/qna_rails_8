@@ -19,6 +19,11 @@ module QnaRails8
     # Configuration for the application, engines, and railties goes here.
     config.action_controller.raise_on_missing_callback_actions = false
 
+    config.action_mailer.delivery_method = :postmark
+
+    config.action_mailer.postmark_settings = {
+      api_token: Rails.application.credentials.postmark_api_token
+    }
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
