@@ -99,7 +99,7 @@ builder:
 accessories:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.4
-    host: "127.0.0.1"
+    host: "188.245.156.180"
     port: "127.0.0.1:9200:9200"
     env:
       clear:
