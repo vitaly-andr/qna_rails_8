@@ -7,9 +7,9 @@
 Rails.application.configure do
   aws_credentials = Rails.application.credentials.aws
 
-  config.litestream.replica_bucket = aws_credentials&.replica_bucket
-  config.litestream.replica_key_id = aws_credentials&.access_key_id
-  config.litestream.replica_access_key = aws_credentials&.secret_access_key
+  ENV['LITESTREAM_REPLICA_BUCKET'] = aws_credentials&.dig(:replica_bucket)
+  ENV['LITESTREAM_ACCESS_KEY_ID'] = aws_credentials&.dig(:access_key_id)
+  ENV['LITESTREAM_SECRET_ACCESS_KEY'] = aws_credentials&.dig(:secret_access_key)
 
   # Replica-specific bucket location.
   # This will be your bucket's URL without the `https://` prefix.
