@@ -244,6 +244,39 @@ GEM
       childprocess (~> 5.0)
     letter_opener (1.10.0)
       launchy (>= 2.2, < 4)
+    litestream (0.12.0)
+      actionpack (>= 7.0)
+      actionview (>= 7.0)
+      activejob (>= 7.0)
+      activesupport (>= 7.0)
+      logfmt (>= 0.0.10)
+      railties (>= 7.0)
+      sqlite3
+    litestream (0.12.0-arm64-darwin)
+      actionpack (>= 7.0)
+      actionview (>= 7.0)
+      activejob (>= 7.0)
+      activesupport (>= 7.0)
+      logfmt (>= 0.0.10)
+      railties (>= 7.0)
+      sqlite3
+    litestream (0.12.0-x86_64-darwin)
+      actionpack (>= 7.0)
+      actionview (>= 7.0)
+      activejob (>= 7.0)
+      activesupport (>= 7.0)
+      logfmt (>= 0.0.10)
+      railties (>= 7.0)
+      sqlite3
+    litestream (0.12.0-x86_64-linux)
+      actionpack (>= 7.0)
+      actionview (>= 7.0)
+      activejob (>= 7.0)
+      activesupport (>= 7.0)
+      logfmt (>= 0.0.10)
+      railties (>= 7.0)
+      sqlite3
+    logfmt (0.0.10)
     logger (1.6.1)
     loofah (2.22.0)
       crass (~> 1.0.2)
@@ -610,6 +643,7 @@ DEPENDENCIES
   kamal
   launchy
   letter_opener
+  litestream (~> 0.12.0)
   oj
   omniauth
   omniauth-github

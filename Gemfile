@@ -110,3 +110,4 @@ gem 'searchkick'
 # gem 'ruby-openai'
 gem 'ffaker'
 gem 'postmark-rails'
+gem "litestream", "~> 0.12.0"
