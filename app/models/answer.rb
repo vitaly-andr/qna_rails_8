@@ -10,7 +10,7 @@ class Answer < ApplicationRecord
 
   has_many :comments, as: :commentable, dependent: :destroy
 
-  belongs_to :question
+  belongs_to :question, touch: true
 
   accepts_nested_attributes_for :links, allow_destroy: true, reject_if: :all_blank
 

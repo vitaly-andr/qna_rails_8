@@ -70,5 +70,5 @@
                                   class: 'delete-file-link',
                                   style: 'color: red; margin-left: 10px;'
 
-          = render partial: 'comments/comments', locals: { commentable: question }
-
+          = cache ["comments", question.id, question.comments.maximum(:updated_at)] do
+            = render partial: 'comments/comments', locals: { commentable: question }

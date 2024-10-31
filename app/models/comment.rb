@@ -3,7 +3,7 @@ class Comment < ApplicationRecord
   include ActionView::RecordIdentifier
   searchkick
 
-  belongs_to :commentable, polymorphic: true
+  belongs_to :commentable, polymorphic: true, touch: true
   validates :body, presence: true
   after_create_commit do
     broadcast_prepend_later_to "questions",

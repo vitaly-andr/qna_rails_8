@@ -3,13 +3,15 @@
 
   = turbo_frame_tag dom_id(commentable, :comments) do
 
-    - if commentable.comments.any?
-      ul
-        - commentable.comments.each do |comment|
-          = render partial: 'comments/comment', locals: { comment: comment }
+    = cache ["comments_section", commentable.cache_key_with_version, commentable.comments.size, commentable.comments.maximum(:updated_at)] do
+      - if commentable.comments.any?
+        ul
+          - commentable.comments.each do |comment|
+            = cache ["comment", comment.cache_key_with_version] do
+              = render partial: 'comments/comment', locals: { comment: comment }
 
-    - else
-      p.has-text-grey-light id=dom_id(commentable, :no_comments) No comments yet...
+      - else
+        p.has-text-grey-light id=dom_id(commentable, :no_comments) No comments yet...
 
     = turbo_frame_tag dom_id(commentable, :new_comment) do
       = turbo_frame_tag dom_id(commentable, :form) do

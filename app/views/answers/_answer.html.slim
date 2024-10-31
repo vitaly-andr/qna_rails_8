@@ -75,4 +75,5 @@
                                   style: 'color: red; margin-left: 10px;'
 
 
-          = render partial: 'comments/comments', locals: { commentable: answer }
+          = cache ["comments_for_answer", answer.cache_key_with_version, answer.comments.maximum(:updated_at)] do
+            = render partial: 'comments/comments', locals: { commentable: answer }

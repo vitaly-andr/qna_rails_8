@@ -5,8 +5,8 @@
       h1.text-4xl.font-bold.mb-4 List of Questions
       = link_to 'Ask question', new_question_path, class: "bg-white text-blue-600 dark:bg-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600"
 
-  ul
-    - questions.each do |question|
-      = render partial: 'questions/question', locals: { question: question }
-
-
+  = cache ["questions_index", questions.size, questions.maximum(:updated_at)] do
+    ul
+      - questions.each do |question|
+        = cache ["question", question.cache_key_with_version] do
+          = render partial: 'questions/question', locals: { question: question }
