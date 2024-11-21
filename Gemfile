@@ -86,7 +86,7 @@ gem "slim-rails"
 
 gem "cssbundling-rails", "~> 1.4"
 
-gem 'aws-sdk-s3', '~> 1.0'
+gem 'aws-sdk-s3', '~> 1.173'
 
 gem 'image_processing'
 gem 'requestjs-rails'
